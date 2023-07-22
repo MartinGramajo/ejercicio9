@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import FormularioPacientes from "./components/FormularioPacientes";
 import CardCita from "./components/CardCita";
+import Swal from "sweetalert2";
 
 function App() {
   let citasIniciales = JSON.parse(localStorage.getItem("citas"));
@@ -21,6 +22,26 @@ function App() {
     setCitas([...citas, cita]);
   };
 
+  const borrarCita = (id) => {
+    Swal.fire({
+      title: "Estas seguro que quieres borrar la cita?",
+      showDenyButton: true,
+      confirmButtonText: "Si",
+      denyButtonText: `no`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Cita borrada con éxito", "", "success");
+        const nuevasCitas = citas.filter((cita) => cita.id !== id);
+        if (citas.id !== id) {
+          setCitas(nuevasCitas);
+        }
+      } else if (result.isDenied) {
+        Swal.fire("No se borro la cita", "", "info");
+      }
+    });
+  };
+
   return (
     <div className="bg-app d-flex flex-column min-vh-100">
       <section>
@@ -33,12 +54,14 @@ function App() {
       </section>
       <section>
         <div className="caja py-5 text-center">
-          {citas.lenght === 0 ? (
-            "no hay citas"
+          {citas.length === 0 ? (
+            <div className="text-center pt-5">
+              <h1> No hay citas para administrar!</h1>
+            </div>
           ) : (
-            <div className="container d-flex flex-wrap justify-content-between">
+            <div className="container d-flex flex-wrap justify-content-around">
               {citas.map((cita) => (
-                <CardCita key={cita.id} cita={cita} />
+                <CardCita key={cita.id} cita={cita} borrarCita={borrarCita} />
               ))}
             </div>
           )}
