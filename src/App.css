@@ -1,0 +1,15 @@
+.bg-celeste {
+  background-color: #e3f2fe !important;
+}
+
+.cita-carta {
+  width: 400px !important;
+  border-radius: 10px !important;
+}
+
+.circulo {
+  background: lightblue;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
