@@ -53,10 +53,10 @@ function App() {
         <FormularioPacientes nuevaCita={nuevaCita} />
       </section>
       <section>
-        <div className="caja py-5 text-center">
+        <div className="py-5 text-center">
           {citas.length === 0 ? (
             <div className="text-center pt-5">
-              <h1> No hay citas para administrar!</h1>
+              <h6> No hay citas</h6>
             </div>
           ) : (
             <div className="container d-flex flex-wrap justify-content-around">
