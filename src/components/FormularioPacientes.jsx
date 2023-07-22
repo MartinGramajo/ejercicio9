@@ -3,6 +3,7 @@ import { Form, Row, Button, Col, Card } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 export default function FormularioPacientes({ nuevaCita }) {
   const [validated, setValidated] = useState(false);
@@ -26,12 +27,17 @@ export default function FormularioPacientes({ nuevaCita }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    //validar
     if (form.checkValidity()) {
       event.stopPropagation();
       setValidated(false);
       cita.id = uuidv4();
       nuevaCita(cita);
+      Swal.fire({
+        icon: "success",
+        title: "cita agendada correctamente",
+        showConfirmButton: false,
+        timer: 2000,
+      });
       setCita({
         mascota: "",
         propietario: "",
@@ -41,6 +47,10 @@ export default function FormularioPacientes({ nuevaCita }) {
       });
     } else {
       setValidated(true);
+      Swal.fire({
+        icon: "error",
+        title: "No se pudo agendar su cita. Por favor verificar los datos",
+      });
     }
   };
 
@@ -50,7 +60,7 @@ export default function FormularioPacientes({ nuevaCita }) {
         Llenar el formulario para crear una cita
       </Card.Header>
       <Form
-        className="p-4 bg-formulario"
+        className="p-4 bg-celeste "
         noValidate
         validated={validated}
         onSubmit={handleSubmit}
